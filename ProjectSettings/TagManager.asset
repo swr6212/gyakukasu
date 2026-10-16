@@ -8,11 +8,13 @@ TagManager:
   - Enemy
   - Bullet
   - Block
+  - Undefined
+  - Ball
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ball
   - Water
   - UI
   - 

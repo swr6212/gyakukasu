@@ -2,28 +2,38 @@ using UnityEngine;
 
 public class EnemyContactDamage : MonoBehaviour
 {
-    [Header("ÚGƒ_ƒ[ƒW")]
+    [Header("æ¥è§¦ãƒ€ãƒ¡ãƒ¼ã‚¸")]
     [SerializeField] private float damage = 10f;
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("‰½‚©‚É‚Ô‚Â‚©‚Á‚½: " + collision.gameObject.name);
+        Debug.Log("æ•µãŒã¶ã¤ã‹ã£ãŸ: " + collision.gameObject.name);
 
-        if (collision.gameObject.CompareTag("Player1"))
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä»¥å¤–ãªã‚‰ä½•ã‚‚ã—ãªã„
+        if (!collision.gameObject.CompareTag("Player1"))
         {
-            Debug.Log("ƒvƒŒƒCƒ„[‚ÉÚGI");
+            return;
+        }
 
-            PlayerStatus playerStatus = collision.gameObject.GetComponent<PlayerStatus>();
+        Debug.Log("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«æ¥è§¦ï¼");
 
-            if (playerStatus != null)
-            {
-                playerStatus.TakeDamage(damage);
-                Debug.Log("ƒvƒŒƒCƒ„[‚É " + damage + " ƒ_ƒ[ƒWI");
-            }
-            else
-            {
-                Debug.LogError("PlayerStatus‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñI");
-            }
+        // è¡çªã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰è¦ªæ–¹å‘ã¸PlayerStatusã‚’æ¢ã™
+        PlayerStatus playerStatus =
+            collision.gameObject.GetComponentInParent<PlayerStatus>();
+
+        if (playerStatus != null)
+        {
+            playerStatus.TakeDamage(damage);
+
+            Debug.Log(
+                "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã« " + damage +
+                " ãƒ€ãƒ¡ãƒ¼ã‚¸ï¼ ç¾åœ¨HP: " +
+                playerStatus.CurrentHP
+            );
+        }
+        else
+        {
+            Debug.LogError("PlayerStatusãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ï¼");
         }
     }
 }
